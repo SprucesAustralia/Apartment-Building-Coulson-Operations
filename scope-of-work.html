@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scope of Work - Cleaning Services</title>
+  <style>
+    /* Same CSS as before */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #01c6a0;
+      padding: 1.5rem;
+      text-align: center;
+      color: white;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      transition: transform 0.3s ease;
+    }
+
+    header.hidden {
+      transform: translateY(-100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 2rem;
+      text-decoration: none;
+      color: #01c6a0;
+      font-weight: 600;
+      padding: 10px 20px;
+      border: 2px solid #01c6a0;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #01c6a0;
+      color: #fff;
+      transform: translateX(-5px);
+    }
+
+    .back-btn::before {
+      content: '←';
+      margin-right: 0.5rem;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      color: #01c6a0;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      animation: fadeInDown 1s ease;
+    }
+
+    .scope-section {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-bottom: 1.5rem;
+      padding: 0.8rem;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: slideUp 1s ease forwards;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      font-size: 1rem;
+      color: #01c6a0;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .section-header:hover {
+      color: #019f82;
+    }
+
+    .section-header .show-more-btn {
+      padding: 6px 12px;
+      cursor: pointer;
+      background-color: #01c6a0;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .section-header .show-more-btn:hover {
+      background-color: #019f82;
+      transform: scale(1.05);
+    }
+
+    .details {
+      display: none;
+      padding: 0.5rem 0;
+      animation: slideDown 0.5s ease;
+    }
+
+    .details.expanded {
+      display: block;
+    }
+
+    .detail-item {
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+      background: #f9f9f9;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .detail-label {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 0.3rem;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { max-height: 0; opacity: 0; }
+      to { max-height: 300px; opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem;
+        font-size: 1.2rem;
+      }
+
+      .container {
+        padding: 0 0.5rem;
+        margin: 1.5rem auto;
+      }
+
+      .back-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .scope-section {
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .section-header {
+        padding: 0.4rem 0;
+        font-size: 0.9rem;
+      }
+
+      .section-header .show-more-btn {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+      }
+
+      .details {
+        padding: 0.4rem 0;
+      }
+
+      .detail-item {
+        padding: 0.4rem;
+        margin-bottom: 0.4rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .scope-section {
+        margin-bottom: 0.8rem;
+      }
+
+      .section-header {
+        font-size: 0.8rem;
+      }
+
+      .section-header .show-more-btn {
+        padding: 4px 8px;
+        font-size: 0.6rem;
+      }
+
+      .detail-item {
+        padding: 0.3rem;
+        margin-bottom: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Cleaning Services - Scope of Work
+  </header>
+  <div class="container">
+    <a href="index.html" class="back-btn">Back to Home</a>
+    <h2>Scope of Work</h2>
+
+    <!-- Section 1 -->
+    <div class="scope-section">
+      <div class="section-header">
+        To be Assigned
+        <button class="show-more-btn" type="button">Show More</button>
+      </div>
+      <div class="details">
+        <div class="detail-item">
+          <div class="detail-label">Tasks:</div>
+          To be Assigned
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Tools:</div>
+          To be Assigned
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="scope-section">
+      <div class="section-header">
+        To be Assigned
+        <button class="show-more-btn" type="button">Show More</button>
+      </div>
+      <div class="details">
+        <div class="detail-item">
+          <div class="detail-label">Tasks:</div>
+          To be Assigned
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Tools:</div>
+          To be Assigned
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="scope-section">
+      <div class="section-header">
+        To be Assigned
+        <button class="show-more-btn" type="button">Show More</button>
+      </div>
+      <div class="details">
+        <div class="detail-item">
+          <div class="detail-label">Tasks:</div>
+          To be Assigned
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Tools:</div>
+          To be Assigned
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="scope-section">
+      <div class="section-header">
+        To be Assigned
+        <button class="show-more-btn" type="button">Show More</button>
+      </div>
+      <div class="details">
+        <div class="detail-item">
+          <div class="detail-label">Tasks:</div>
+          To be Assigned
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Tools:</div>
+          To be Assigned
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="scope-section">
+      <div class="section-header">
+        To be Assigned
+        <button class="show-more-btn" type="button">Show More</button>
+      </div>
+      <div class="details">
+        <div class="detail-item">
+          <div class="detail-label">Tasks:</div>
+          To be Assigned
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Tools:</div>
+          To be Assigned
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6 -->
+    <div class="scope-section">
+      <div class="section-header">
+        To be Assigned
+        <button class="show-more-btn" type="button">Show More</button>
+      </div>
+      <div class="details">
+        <div class="detail-item">
+          <div class="detail-label">Tasks:</div>
+          To be Assigned
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Tools:</div>
+          To be Assigned
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 7 -->
+    <div class="scope-section">
+      <div class="section-header">
+        To be Assigned
+        <button class="show-more-btn" type="button">Show More</button>
+      </div>
+      <div class="details">
+        <div class="detail-item">
+          <div class="detail-label">Tasks:</div>
+          To be Assigned
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Tools:</div>
+          To be Assigned
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Header hide/show on scroll
+      let lastScroll = 0;
+      const header = document.querySelector('header');
+
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > lastScroll && currentScroll > 50) {
+          header.classList.add('hidden');
+        } else {
+          header.classList.remove('hidden');
+        }
+        lastScroll = currentScroll;
+      });
+
+      // Collapsible sections
+      const showMoreButtons = document.querySelectorAll('.show-more-btn');
+
+      showMoreButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const details = btn.closest('.section-header').nextElementSibling;
+          const isExpanded = btn.classList.toggle('expanded');
+          details.classList.toggle('expanded');
+          btn.textContent = isExpanded ? 'Show Less' : 'Show More';
+        });
+      });
+
+      // Delay animations for scope sections
+      const sections = document.querySelectorAll('.scope-section');
+      sections.forEach((section, index) => {
+        section.style.animationDelay = `${0.3 + index * 0.2}s`;
+      });
+    });
+  </script>
+</body>
+</html>
